@@ -1,0 +1,76 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *llink;
+    struct node *rlink;
+};
+
+void in_traversal(struct node* root)
+{
+    if(root == NULL)
+     return;
+
+    in_traversal(root->llink);
+    printf("%d --",root->data);
+    in_traversal(root->rlink);
+}
+
+void pre_traversal(struct node* root)
+{
+    if(root==NULL)
+     return;
+    
+    printf("%d --",root->data);
+    pre_traversal(root->llink);
+    pre_traversal(root->rlink);
+}
+
+void pos_traversal(struct node* root)
+{
+    if(root==NULL)
+     return;
+
+    pos_traversal(root->llink);
+    pos_traversal(root->rlink);
+    printf("%d --",root->data);
+}
+
+struct node* create(int  value)
+{
+    struct node *new=(struct node*) malloc(sizeof(struct node));
+    new->data=value;
+    new->llink=NULL;
+    new->rlink=NULL;
+
+    return new;
+}
+
+struct node* insert_l(struct node* root,int value)
+{
+    root->llink=create(value);
+    return root->llink;
+}
+
+struct node* insert_r(struct node* root, int value) {
+  root->rlink = create(value);
+  return root->rlink;
+}
+
+void main() {
+  struct node* root = create(1);
+  insert_l(root, 2);
+  insert_r(root, 3);
+  insert_l(root->llink, 4);
+
+  printf("Inorder traversal \n");
+  in_traversal(root);
+
+  printf("\nPreorder traversal \n");
+  pre_traversal(root);
+
+  printf("\nPostorder traversal \n");
+  pos_traversal(root);
+}
